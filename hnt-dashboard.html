@@ -1,0 +1,111 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <link rel="preconnect" href="https://fonts.googleapis.com"> -->
+    <!-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,900&display=swap" rel="stylesheet"> -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;1,900&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Roboto:ital,wght@0,300;1,900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="hnt-dashboard.css">
+
+
+    
+    <script type="text/javascript">
+
+        function setCommonDataElement(key, value) {
+            var tag = document.createElement('p');
+            var text = document.createTextNode(`${key}: ${value}`);
+            tag.appendChild(text);
+            
+            return tag;
+        }
+
+        function setStatusData(statusData) {
+            console.log(statusData);
+
+            var statusContainer = document.getElementById('status-container-data');
+            var tag = document.createElement('span');
+            var statusText = document.createTextNode(`Status - ${statusData.online}`);
+            tag.appendChild(statusText);
+
+            statusContainer.appendChild(tag);
+
+        }
+
+        function setMinerName(name) {
+            var titleElement = document.getElementById('title-container');
+            var tag = document.createElement('h4');
+            var text = document.createTextNode(name);
+            tag.appendChild(text);
+            console.log('**', tag, titleElement);
+            tag.classList.add('miner-name');
+
+            titleElement.appendChild(tag);
+        }
+
+        function setMinerData(minerData) {
+            console.log('minerdata', minerData)
+            var element = document.getElementById('miner-data-container');
+            for (const [key, value] of Object.entries(minerData)) {
+                // console.log(key, value);
+                switch(key) {
+                    case 'name':
+                        setMinerName(value);
+                        break;
+                    case 'status':
+                        setStatusData(value);
+                        break;
+                    default:
+                        var tag = setCommonDataElement(key, value);
+                }
+
+                element.appendChild(tag);
+            }
+            
+        }
+
+        function getMinerData() {
+            var minerName = 'daring-sand-scorpion';
+            var apiUrl = `https://api.helium.io/v1/hotspots/name/${minerName}`;
+            fetch(apiUrl).then(response => {
+            return response.json();
+            }).then(resp => {
+            // Work with JSON data here
+                console.log(resp.data[0]);
+                setMinerData(resp.data[0]);
+            }).catch(err => {
+            // Do something for an error here
+            }); 
+        }
+
+        
+
+        getMinerData();
+        
+    </script>
+</head>
+<body>
+    <div id='title-container'>
+        <h1 id='title'>HNT DASHBOARD</h1>
+    </div>
+
+    <div id='status-container-data'></div>
+    
+    <div id='miner-data-container'>
+
+    </div>
+</body>
+</html>
