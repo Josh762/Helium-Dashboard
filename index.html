@@ -26,29 +26,25 @@
     <script type="text/javascript">
 
         function setDataElement(id, value, idEnding) {
-            console.log('setting status', status, id);
-
-            var statusContainer = document.getElementById(id + idEnding);
-            var statusText = document.createTextNode(`Status - ${value}`);
+            var statusContainer = document.getElementById(`${id}-${idEnding.toLowerCase()}`);
+            var statusText = document.createTextNode(`${idEnding} - ${value}`);
             statusContainer.appendChild(statusText);
 
         }
 
         function setStatus(id, status) {
-            setDataElement(id, status, '-status');
+            setDataElement(id, status, 'Status');
         }
 
         function setHeight(id, height) {
-            setDataElement(id, height, '-height');
+            setDataElement(id, height, 'Height');
         }
 
         function setMinerData(minerData) {
-            console.log('minerdata', minerData)
             var element = document.getElementById('miner-data-container');
 
             setStatus(minerData.name, minerData.status.online);
             setHeight(minerData.name, minerData.status.height);
-            
         }
 
         function getMinerData() {
@@ -73,9 +69,7 @@
             }
             
         }
-
         
-
         getMinerData();
         
     </script>
