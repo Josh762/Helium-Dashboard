@@ -1,7 +1,6 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,12 +16,14 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Roboto:ital,wght@0,300;1,900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Roboto:ital,wght@0,300;1,900&display=swap"
+        rel="stylesheet">
 
     <link rel="stylesheet" href="hnt-dashboard.css">
 
 
-    
+
     <script type="text/javascript">
 
         function setDataElement(id, value, idEnding) {
@@ -49,7 +50,7 @@
 
             setStatus(minerData.name, minerData.status.online);
             setBlock(minerData.name, minerData.block);
-            setHeight(minerData.name, minerData.status.height); 
+            setHeight(minerData.name, minerData.status.height);
         }
 
         function getMinerData() {
@@ -64,22 +65,32 @@
             for (const name of minerNames) {
                 var apiUrl = `https://api.helium.io/v1/hotspots/name/${name}`;
                 fetch(apiUrl).then(response => {
-                return response.json();
+                    return response.json();
                 }).then(resp => {
-                // Work with JSON data here
+                    // Work with JSON data here
                     console.log(resp.data[0]);
                     setMinerData(resp.data[0]);
                 }).catch(err => {
-                // Do something for an error here
-                }); 
+                    console.error(err);
+                    let errorData = {
+                        name,
+                        status: { online: "offline", height: "unknown" },
+                        block: "unknown",
+
+                    }
+
+                    setMinerData(errorData);
+                    // Do something for an error here
+                });
             }
-            
+
         }
 
         getMinerData();
-        
+
     </script>
 </head>
+
 <body>
     <div id='title-container'>
         <h1 id='title'>Helium Dashboard ❤️❤️</h1>
@@ -93,7 +104,7 @@
     </div>
 
     <hr>
-    
+
     <div>
         <h3>Polite Maroon Anteater 🐜🍴</h3>
         <p id='polite-maroon-anteater-status'></p>
@@ -123,4 +134,5 @@
 
     </div>
 </body>
+
 </html>
